@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">WatchBox</string>
+
+    <string name="search">Search</string>
+    <string name="favorites">Favorites</string>
+    <string name="delete">Delete</string>
+    <string name="empty_view_text">Sorry, we couldn’t find any movies by your request :( Please, try another one</string>
+    <string name="empty_view_text_favorites">You haven’t any favorites view, please come back to previous screen and add at least one</string>
+    <string name="empty_view_welcome_text">Hello, it’s a sample project and you could start to use it from tap to search icon in top bar.
+        You can find movies by titles, enjoy!</string>
+
+    <string name="action_ok">Ok</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="dialog_remove_all">Are you sure, that you want to delete your saved favorites films ?</string>
+
+    <string name="movie_short_info">%1$s \n%2$s \n%3$s</string>
+    <string name="movie_rating_money_info">imdb: %1$s (votes: %2$s) \n%3$s</string>
+
+</resources>

@@ -1,0 +1,25 @@
+object Versions {
+    const val kotlin = "1.6.10"
+    const val appCompat = "1.4.2"
+    const val material = "1.6.1"
+    const val constraint = "2.1.4"
+    const val navVersion = "2.5.0"
+    const val androidxCoreKtx = "1.8.0"
+    const val androidxLifecycle = "2.4.1"
+    const val room = "2.5.0-alpha02"
+    const val hilt = "2.41"
+    const val retrofit = "2.9.0"
+    const val gson = "2.9.0"
+    const val httpLoggingInterceptor = "4.9.3"
+    const val rxJavaAndroid = "3.0.0"
+    const val rxJavaKotlin = "3.0.1"
+    const val rxJava = "3.1.5"
+    const val rxJavaCallAdapter = "2.9.0"
+    const val glide = "4.13.2"
+
+    // Tests
+    const val junit = "4.13.2"
+    const val testExtJunit = "1.1.3"
+    const val mockitoCore = "3.0.0"
+    const val espresso = "3.4.0"
+}
