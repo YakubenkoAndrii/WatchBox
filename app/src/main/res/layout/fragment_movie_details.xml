@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="16dp">
+    android:layout_margin="@dimen/space_large">
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -30,21 +30,19 @@
         style="@style/Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:textSize="18sp"
+        android:layout_marginHorizontal="@dimen/space_large"
+        android:layout_marginTop="@dimen/space_medium"
         app:layout_constraintStart_toEndOf="@+id/movie_poster"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Batman" />
 
     <TextView
         android:id="@+id/text_view_short_info"
-        style="@style/Subtitle"
+        style="@style/Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:textSize="18sp"
+        android:layout_marginHorizontal="@dimen/space_large"
+        android:layout_marginTop="@dimen/space_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/movie_poster"
         app:layout_constraintTop_toBottomOf="@+id/text_view_title"
@@ -52,12 +50,11 @@
 
     <TextView
         android:id="@+id/text_view_actors"
-        style="@style/Subtitle"
+        style="@style/Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:textSize="18sp"
+        android:layout_marginHorizontal="@dimen/space_large"
+        android:layout_marginTop="@dimen/space_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/movie_poster"
         app:layout_constraintTop_toBottomOf="@+id/text_view_short_info"
@@ -65,12 +62,11 @@
 
     <TextView
         android:id="@+id/text_view_summary"
-        style="@style/Subtitle"
+        style="@style/Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:textSize="18sp"
+        android:layout_marginHorizontal="@dimen/space_large"
+        android:layout_marginTop="@dimen/space_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/movie_poster"
         app:layout_constraintTop_toBottomOf="@+id/text_view_actors"

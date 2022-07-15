@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="card_corner_radius_small">4dp</dimen>
+    <dimen name="card_corner_radius_medium">8dp</dimen>
+    <dimen name="space_small">4dp</dimen>
+    <dimen name="space_medium">8dp</dimen>
+    <dimen name="space_large">16dp</dimen>
+    <dimen name="space_extra_large">32dp</dimen>
+
+    <dimen name="large_text">18sp</dimen>
+    <dimen name="default_text">14sp</dimen>
+</resources>

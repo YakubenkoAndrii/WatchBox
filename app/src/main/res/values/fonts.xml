@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Title" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/large_text</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
         <item name="android:lineSpacingExtra">2sp</item>
@@ -9,7 +9,7 @@
     </style>
 
     <style name="Subtitle" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/default_text</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
         <item name="android:lineSpacingExtra">2sp</item>
