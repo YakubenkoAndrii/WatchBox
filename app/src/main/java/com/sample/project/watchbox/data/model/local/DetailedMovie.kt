@@ -7,17 +7,17 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class DetailedMovie(
-    var title: String,
-    var year: String,
-    var rated: String,
-    var released: String,
-    var runtime: String,
-    var genre: String,
-    var actors: String,
-    var posterImage: String,
-    var imdbRating: String,
-    var imdbVotes: String,
-    var boxOffice: String
+    val title: String,
+    val year: String,
+    val rated: String,
+    val released: String,
+    val runtime: String,
+    val genre: String,
+    val actors: String,
+    val posterImage: String,
+    val imdbRating: String,
+    val imdbVotes: String,
+    val boxOffice: String
 ) : Parcelable {
     constructor(movie: ResponseMovieDescription) : this(
         title = movie.title,

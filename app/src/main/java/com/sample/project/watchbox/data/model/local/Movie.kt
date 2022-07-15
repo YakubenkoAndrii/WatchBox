@@ -6,11 +6,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Movie(
-    var title: String,
-    var year: String,
-    var imdbId: String,
-    var type: String,
-    var posterImage: String,
+    val title: String,
+    val year: String,
+    val imdbId: String,
+    val type: String,
+    val posterImage: String,
 ) : Parcelable {
     constructor(movie: ResponseMovieItem) : this(
         title = movie.title,
