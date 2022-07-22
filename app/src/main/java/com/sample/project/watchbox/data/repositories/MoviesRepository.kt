@@ -1,54 +1,44 @@
 package com.sample.project.watchbox.data.repositories
 
-import com.sample.project.watchbox.data.database.dao.MoviesDao
-import com.sample.project.watchbox.data.database.entities.MovieEntity
 import com.sample.project.watchbox.data.model.local.DetailedMovie
 import com.sample.project.watchbox.data.model.local.Movie
-import com.sample.project.watchbox.data.model.mapper.moviemapper.MoviesMapper
-import com.sample.project.watchbox.data.network.movies.MoviesService
 import io.reactivex.rxjava3.core.*
-import javax.inject.Inject
-import javax.inject.Singleton
 
 interface MoviesRepository {
+    /**
+     * returns list of movies by search query as Single<List>
+     */
     fun searchMovies(query: String): Single<List<Movie>>
+
+    /**
+     * returns details about movie by movieID as DetailedMovie
+     */
     fun getMovieDetails(movieId: String): Single<DetailedMovie>
+
+    /**
+     * returns saved list of movies from database as Single<List>
+     */
     fun getMovies(): Single<List<DetailedMovie>>
-    fun isAddedToFavorite(movieId: String): Observable<Boolean>
+
+    /**
+     * returns is movie added to favorites by movieId from database as Observable<Boolean>
+     */
+    fun isAddedToFavorites(movieId: String): Observable<Boolean>
+
+    /**
+     * adding movie to favorites as Completable
+     */
     fun addToFavorites(movieId: String, movieItem: DetailedMovie): Completable
+
+    /**
+     * removing movie from favorites as Completable
+     */
     fun removeFromFavorites(movieId: String): Completable
+
+    /**
+     * removing all movies from database as Completable
+     */
     fun deleteAllFavorites(): Completable
 }
 
-@Singleton
-class MoviesRepositoryImpl @Inject constructor(
-    private val moviesService: MoviesService,
-    private val moviesMapper: MoviesMapper,
-    private val moviesDao: MoviesDao
-) : MoviesRepository {
 
-    override fun searchMovies(query: String): Single<List<Movie>> =
-        moviesService.searchMovies(query).map { moviesMapper.mapToLocalMovieList(it.movieList) }
-
-    override fun getMovieDetails(movieId: String): Single<DetailedMovie> =
-        moviesService.getMovieDetails(movieId).map {
-            moviesMapper.mapToLocalMovieDescription(it)
-        }
-
-    override fun getMovies(): Single<List<DetailedMovie>> =
-        moviesDao.getAllMovies().map {
-            moviesMapper.mapToLocalMoviesFromEntity(it)
-        }
-
-    override fun isAddedToFavorite(movieId: String): Observable<Boolean> =
-        moviesDao.isAddedToFavorite(movieId).map { it > 0 }
-
-    override fun addToFavorites(movieId: String, movieItem: DetailedMovie): Completable =
-        moviesDao.addToFavorites(MovieEntity(movieId, movieItem))
-
-    override fun removeFromFavorites(movieId: String): Completable =
-        moviesDao.removeFromFavorites(movieId)
-
-    override fun deleteAllFavorites(): Completable = moviesDao.deleteAll()
-
-}

@@ -1,14 +1,17 @@
 package com.sample.project.watchbox.ui.base
 
 import androidx.lifecycle.ViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import com.sample.project.watchbox.utils.scheduler.SchedulerProvider
 import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
-import io.reactivex.rxjava3.schedulers.Schedulers
+import javax.inject.Inject
 
 open class BaseViewModel : ViewModel() {
+
+    @Inject
+    lateinit var schedulerProvider: SchedulerProvider
 
     private val disposables: CompositeDisposable by lazy { CompositeDisposable() }
     private val onNextStub: (Any) -> Unit = {}
@@ -38,15 +41,15 @@ open class BaseViewModel : ViewModel() {
     }
 
     private fun <T : Any> Single<T>.async(): Single<T> {
-        return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return subscribeOn(schedulerProvider.schedulerIO()).observeOn(schedulerProvider.schedulerUI())
     }
 
     private fun <T : Any> Observable<T>.async(): Observable<T> {
-        return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return subscribeOn(schedulerProvider.schedulerIO()).observeOn(schedulerProvider.schedulerUI())
     }
 
     private fun Completable.async(): Completable {
-        return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return subscribeOn(schedulerProvider.schedulerIO()).observeOn(schedulerProvider.schedulerUI())
     }
 
     private fun Disposable.autoDispose() {

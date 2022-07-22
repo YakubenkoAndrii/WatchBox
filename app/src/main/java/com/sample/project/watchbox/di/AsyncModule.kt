@@ -1,6 +1,7 @@
 package com.sample.project.watchbox.di
 
-import com.sample.project.watchbox.data.model.mapper.moviemapper.MoviesMapper
+import com.sample.project.watchbox.utils.scheduler.SchedulerProvider
+import com.sample.project.watchbox.utils.scheduler.SchedulerProviderImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,10 +10,9 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object MappersModule {
+object AsyncModule {
 
     @Singleton
     @Provides
-    fun provideMoviesMapper(): MoviesMapper = MoviesMapper()
-
+    fun provideSchedulerProvider(): SchedulerProvider = SchedulerProviderImpl()
 }

@@ -23,11 +23,11 @@ class MoviesViewModel @Inject constructor(
             .doOnSubscribe { _movies.value = Loading(true) }
             .doOnTerminate { _movies.value = Loading(false) }
             .subBy(
-                onError = {
-                    _movies.value = Failure(HttpError(it))
+                onError = { throwable ->
+                    _movies.value = Failure(HttpError(throwable))
                 },
-                onSuccess = {
-                    _movies.value = if (it.isEmpty()) EmptySuccess() else Success(it)
+                onSuccess = { moviesList ->
+                    _movies.value = if (moviesList.isEmpty()) EmptySuccess() else Success(moviesList)
                 }
             )
     }
@@ -39,11 +39,11 @@ class MoviesViewModel @Inject constructor(
             .doOnSubscribe { _movie.value = Loading(true) }
             .doOnTerminate { _movie.value = Loading(false) }
             .subBy(
-                onError = {
-                    _movie.value = Failure(HttpError(it))
+                onError = { throwable ->
+                    _movie.value = Failure(HttpError(throwable))
                 },
-                onSuccess = {
-                    _movie.value = Success(it)
+                onSuccess = { detailedMovie ->
+                    _movie.value = Success(detailedMovie)
                     isAddedToFavorite(movieId)
                 }
             )
@@ -56,11 +56,11 @@ class MoviesViewModel @Inject constructor(
             .doOnSubscribe { _localMovies.value = Loading(true) }
             .doOnTerminate { _localMovies.value = Loading(false) }
             .subBy(
-                onError = {
-                    _localMovies.value = Failure(HttpError(it))
+                onError = { throwable ->
+                    _localMovies.value = Failure(HttpError(throwable))
                 },
-                onSuccess = {
-                    _localMovies.value = if (it.isEmpty()) EmptySuccess() else Success(it)
+                onSuccess = { moviesList ->
+                    _localMovies.value = if (moviesList.isEmpty()) EmptySuccess() else Success(moviesList)
                 }
             )
     }
@@ -92,13 +92,13 @@ class MoviesViewModel @Inject constructor(
     private val _isFavorite = MutableStateFlow<DataWrapper<Boolean>>(InitialSuccess())
     val isFavorite: StateFlow<DataWrapper<Boolean>> = _isFavorite
     private fun isAddedToFavorite(movieId: String) {
-        moviesRepository.isAddedToFavorite(movieId)
+        moviesRepository.isAddedToFavorites(movieId)
             .subBy(
-                onError = {
-                    _isFavorite.value = Failure(HttpError(it))
+                onError = { throwable ->
+                    _isFavorite.value = Failure(HttpError(throwable))
                 },
-                onNext = { result ->
-                    _isFavorite.value = Success(result)
+                onNext = { isAddedToFavorite ->
+                    _isFavorite.value = Success(isAddedToFavorite)
                 }
             )
     }
