@@ -18,6 +18,9 @@ open class BaseViewModel : ViewModel() {
     private val onErrorStub: (Throwable) -> Unit = {}
     private val onCompleteStub: () -> Unit = {}
 
+    /**
+     * simplifying subscribe Single with auto adding schedulers and to CompositeDisposable
+     */
     protected fun <T : Any> Single<T>.subBy(
         onError: (Throwable) -> Unit = onErrorStub,
         onSuccess: (T) -> Unit = onNextStub
@@ -25,6 +28,9 @@ open class BaseViewModel : ViewModel() {
         async().subscribeBy(onError, onSuccess).autoDispose()
     }
 
+    /**
+     * simplifying subscribe Observable with auto adding schedulers and to CompositeDisposable
+     */
     protected fun <T : Any> Observable<T>.subBy(
         onError: (Throwable) -> Unit = onErrorStub,
         onComplete: () -> Unit = onCompleteStub,
@@ -33,6 +39,9 @@ open class BaseViewModel : ViewModel() {
         async().subscribeBy(onError, onComplete, onNext).autoDispose()
     }
 
+    /**
+     * simplifying subscribe Completable with auto adding schedulers and to CompositeDisposable
+     */
     protected fun Completable.subBy(
         onError: (Throwable) -> Unit = onErrorStub,
         onComplete: () -> Unit = onCompleteStub
