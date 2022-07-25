@@ -2,7 +2,7 @@ package com.sample.project.watchbox.data.model.local
 
 import android.os.Parcelable
 import com.sample.project.watchbox.data.database.entities.MovieEntity
-import com.sample.project.watchbox.data.model.remote.ResponseMovieDescription
+import com.sample.project.watchbox.data.model.network.NetworkMovieDescription
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -19,7 +19,7 @@ data class DetailedMovie(
     val imdbVotes: String,
     val boxOffice: String
 ) : Parcelable {
-    constructor(movie: ResponseMovieDescription) : this(
+    constructor(movie: NetworkMovieDescription) : this(
         title = movie.title,
         year = movie.year,
         rated = movie.rated,

@@ -17,7 +17,7 @@
         android:layout_gravity="center"
         android:layout_marginHorizontal="@dimen/space_extra_large"
         android:gravity="center"
-        android:visibility="gone"
+        android:visibility="visible"
         android:text="@string/empty_view_welcome_text"
         tools:visibility="visible" />
 

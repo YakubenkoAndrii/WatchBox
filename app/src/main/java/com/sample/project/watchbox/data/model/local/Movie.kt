@@ -1,7 +1,7 @@
 package com.sample.project.watchbox.data.model.local
 
 import android.os.Parcelable
-import com.sample.project.watchbox.data.model.remote.ResponseMovieItem
+import com.sample.project.watchbox.data.model.network.ResponseMovieItem
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

@@ -36,12 +36,14 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
         val movieId = args.movieId
         viewModel.getMovieDetails(movieId)
         initViews(movieId)
-        initObservers()
+        initObservers(movieId)
     }
 
     private fun initViews(movieId: String) {
         binding.imageViewUnliked.setOnClickListener {
-            viewModel.addToFavorites(args.movieId, (viewModel.movie.value as Success).data)
+            viewModel.movie.value.detailedMovie?.let { detailedMovie ->
+                viewModel.addToFavorites(args.movieId, detailedMovie)
+            }
         }
         binding.imageViewLiked.setOnClickListener {
             viewModel.removeFromFavorites(args.movieId)
@@ -57,43 +59,32 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
         }
     }
 
-    private fun initObservers() {
+    private fun initObservers(movieId: String) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
                 launch {
-                    viewModel.movie.collect { dataWrapper ->
-                        when (dataWrapper) {
-                            is Success -> {
-                                updateView(dataWrapper.data)
-                            }
-                            is Failure -> {
-                                Toast.makeText(requireContext(), dataWrapper.httpError.message, Toast.LENGTH_LONG).show()
-                            }
-                            is Loading -> {
-                                binding.progressBar.show(dataWrapper.loading)
-                            }
-                            else -> {}
-                        }
-                    }
-                }
-                launch {
-                    viewModel.isFavorite.collect { dataWrapper ->
-                        when (dataWrapper) {
-                            is Success -> {
-                                val isFavorite = dataWrapper.data
-                                binding.imageViewShare.show(true)
-                                if (isFavorite) {
-                                    binding.imageViewUnliked.show(false)
-                                    binding.imageViewLiked.show(true)
-                                } else {
-                                    binding.imageViewLiked.show(false)
-                                    binding.imageViewUnliked.show(true)
+                    viewModel.movie.collect { detailedMovieState ->
+                        binding.progressBar.show(detailedMovieState.isLoading)
+                        val detailedMovie = detailedMovieState.detailedMovie
+                        when {
+                            detailedMovie != null -> {
+                                updateView(detailedMovie)
+                                launch {
+                                    viewModel.isAddedToFavorite(movieId).collect { isFavorite ->
+                                        binding.imageViewShare.show(true)
+                                        if (isFavorite) {
+                                            binding.imageViewUnliked.show(false)
+                                            binding.imageViewLiked.show(true)
+                                        } else {
+                                            binding.imageViewLiked.show(false)
+                                            binding.imageViewUnliked.show(true)
+                                        }
+                                    }
                                 }
                             }
-                            is Failure -> {
-                                Toast.makeText(requireContext(), dataWrapper.httpError.message, Toast.LENGTH_LONG).show()
+                            detailedMovieState.error != null -> {
+                                Toast.makeText(requireContext(), detailedMovieState.error, Toast.LENGTH_LONG).show()
                             }
-                            else -> {}
                         }
                     }
                 }

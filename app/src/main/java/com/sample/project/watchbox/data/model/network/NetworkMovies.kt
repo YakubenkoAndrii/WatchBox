@@ -1,4 +1,4 @@
-package com.sample.project.watchbox.data.model.remote
+package com.sample.project.watchbox.data.model.network
 
 import com.google.gson.annotations.SerializedName
 

@@ -24,6 +24,7 @@ import com.sample.project.watchbox.databinding.FragmentMoviesListBinding
 import com.sample.project.watchbox.ui.base.BaseFragment
 import com.sample.project.watchbox.ui.base.Inflate
 import com.sample.project.watchbox.ui.movies.MoviesViewModel
+import com.sample.project.watchbox.ui.movies.SearchMovieState
 import com.sample.project.watchbox.utils.BindingViewHolder
 import com.sample.project.watchbox.utils.RecyclerViewHelper
 import com.sample.project.watchbox.utils.show
@@ -73,27 +74,17 @@ class MoviesListFragment : BaseFragment<FragmentMoviesListBinding>() {
         // movies list for recyclerView
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.movies.collect { dataWrapper ->
-                    when (dataWrapper) {
-                        is Success -> {
+                viewModel.movies.collect { searchMovieState ->
+                    binding.progressBar.show(searchMovieState.isLoading)
+                    when {
+                        searchMovieState.moviesList != null -> {
+                            val moviesIsEmpty = searchMovieState.moviesList.isEmpty()
+                            binding.textViewEmpty.show(moviesIsEmpty)
                             binding.textViewWelcome.show(false)
-                            binding.textViewEmpty.show(false)
-                            binding.recyclerViewMovies.show(true)
-                            updateRecyclerView(dataWrapper.data)
+                            updateRecyclerView(searchMovieState.moviesList)
                         }
-                        is EmptySuccess -> {
-                            binding.textViewWelcome.show(false)
-                            binding.recyclerViewMovies.show(false)
-                            binding.textViewEmpty.show(true)
-                        }
-                        is InitialSuccess -> {
-                            binding.textViewWelcome.show(true)
-                        }
-                        is Failure -> {
-                            Toast.makeText(requireContext(), dataWrapper.httpError.message, Toast.LENGTH_LONG).show()
-                        }
-                        is Loading -> {
-                            binding.progressBar.show(dataWrapper.loading)
+                        searchMovieState.error != null -> {
+                            Toast.makeText(requireContext(), searchMovieState.error, Toast.LENGTH_LONG).show()
                         }
                     }
                 }
@@ -152,5 +143,4 @@ class MoviesListFragment : BaseFragment<FragmentMoviesListBinding>() {
         super.onResume()
         checkDeepLinks(activity?.intent?.data)
     }
-
 }

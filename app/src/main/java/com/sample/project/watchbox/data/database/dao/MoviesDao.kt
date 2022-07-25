@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sample.project.watchbox.data.database.entities.MovieEntity
 import io.reactivex.rxjava3.core.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MoviesDao {
@@ -20,7 +21,7 @@ interface MoviesDao {
     fun removeFromFavorites(movieId: String): Completable
 
     @Query("SELECT count(*) FROM movie_table WHERE movieId= :movieId")
-    fun isAddedToFavorite(movieId: String): Observable<Int>
+    fun isAddedToFavorite(movieId: String): Flow<Int>
 
     @Query("DELETE FROM movie_table")
     fun deleteAll(): Completable
